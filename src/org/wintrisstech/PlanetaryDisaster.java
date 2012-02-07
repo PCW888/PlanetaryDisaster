@@ -4,10 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 /**
  * This project is designed as a starting point for students learning about
@@ -17,7 +20,7 @@ import javax.swing.JFrame;
  * @author aaron@wintrisstech.org (Aaron VonderHaar)
  * @author http://wintrisstech.org
  */
-public class PlanetaryDisaster extends JComponent
+public class PlanetaryDisaster extends JComponent implements ActionListener
 {
 
     private static final int windowWidth = 1052;
@@ -27,6 +30,8 @@ public class PlanetaryDisaster extends JComponent
     private Image volcano;
     private Image volcanoWithLava;
     private Color skyColor = new Color(0, 128, 255);
+    
+    private NewtLunarColony newt = new NewtLunarColony();
 
     public static void main(String[] args) throws IOException
     {
@@ -37,6 +42,8 @@ public class PlanetaryDisaster extends JComponent
         window.setLocationRelativeTo(null);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setVisible(true);
+        Timer t = new Timer (100,game);
+        t.start();
     }
 
     public PlanetaryDisaster() throws IOException
@@ -59,5 +66,13 @@ public class PlanetaryDisaster extends JComponent
         g.fillRect(0, 0, windowWidth, windowHeight);
         g.drawImage(background, 0, 0, windowWidth, windowHeight, null);
         g.drawImage(volcano, -60, 35, 678, 273, null);
+        newt.paint(g);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) 
+    {
+        newt.update();
+        repaint();
     }
 }
